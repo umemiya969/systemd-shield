@@ -1,23 +1,19 @@
 apply_journald_guard() {
-  CONF="/etc/systemd/journald.conf"
-  cp -a "$CONF" "$BACKUP/journald.conf.bak" 2>/dev/null || true
+  CONF="/etc/systemd/journald.conf.d/systemd-shield.conf"
+  mkdir -p /etc/systemd/journald.conf.d
 
-  case "$HW_PROFILE" in
-    lowend) SIZE="50M" ;;
-    mid)    SIZE="100M" ;;
-    *)      SIZE="200M" ;;
-  esac
+  cp -a "$CONF" "$BACKUP/journald_guard.bak" 2>/dev/null || true
 
   cat > "$CONF" <<EOF
 [Journal]
-Storage=persistent
+Storage=volatile
 Compress=yes
-SystemMaxUse=$SIZE
-RuntimeMaxUse=$SIZE
+Seal=no
+SyncIntervalSec=5m
 RateLimitIntervalSec=30s
 RateLimitBurst=500
+SystemMaxUse=${JOURNAL_SIZE:-50M}
 EOF
 
   systemctl restart systemd-journald
-  echo "[OK] journald guarded ($SIZE)"
 }
