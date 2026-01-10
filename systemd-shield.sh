@@ -24,11 +24,18 @@ source "$BASE_DIR/modules/resource_guard.sh"
 source "$BASE_DIR/modules/boot_guard.sh"
 source "$BASE_DIR/modules/service_guard.sh"
 source "$BASE_DIR/modules/rollback.sh"
+source "$BASE_DIR/modules/manager_guard.sh"
+source "$BASE_DIR/modules/service_accounting_guard.sh"
+source "$BASE_DIR/modules/socket_guard.sh"
+source "$BASE_DIR/modules/user_guard.sh"
 
 detect_hardware
 detect_environment
 detect_services
-
+apply_manager_guard
+apply_service_accounting_guard
+apply_socket_guard
+apply_user_guard
 apply_journald_guard
 apply_oomd_guard
 apply_resource_guard
