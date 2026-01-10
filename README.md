@@ -1,5 +1,10 @@
 # 🛡️ systemd-shield
 
+![License](https://img.shields.io/github/license/umemiya969/systemd-shield?style=flat-square)
+![Shell](https://img.shields.io/badge/shell-bash-blue?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Linux%20(systemd)-brightgreen?style=flat-square)
+![ShellCheck](https://img.shields.io/badge/shellcheck-passing-success?style=flat-square)
+
 **Adaptive systemd optimizer & guard for Linux**
 
 > Mitigates common systemd weaknesses in a **safe**, **adaptive**, and **reversible** way  
