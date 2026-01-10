@@ -10,11 +10,8 @@ detect_hardware() {
     HW_PROFILE="high"
   fi
 
-  if lsblk -d -o rota | grep -q 1; then
-    DISK_TYPE="hdd"
-  else
-    DISK_TYPE="ssd"
-  fi
+  lsblk -d -o rota | grep -q 1 && DISK_TYPE="hdd" || DISK_TYPE="ssd"
 
-  echo "[*] Hardware: RAM=${MEM_MB}MB CPU=${CPU_CORES} DISK=${DISK_TYPE}"
+  export MEM_MB CPU_CORES HW_PROFILE DISK_TYPE
+  echo "[HW] $HW_PROFILE | RAM=${MEM_MB}MB | CPU=$CPU_CORES | $DISK_TYPE"
 }
