@@ -5,10 +5,8 @@ detect_environment() {
     SESSION_TYPE="server"
   fi
 
-  if systemctl is-active NetworkManager &>/dev/null; then
-    NET_STACK="NetworkManager"
-  else
-    NET_STACK="networkd"
+  if systemctl is-active NetworkManager >/dev/null; then
+  KEEP_SYSTEMD_RESOLVED=yes
   fi
 
   echo "[*] Environment: $SESSION_TYPE | Network: $NET_STACK"
