@@ -5,203 +5,201 @@
 ![Platform](https://img.shields.io/badge/platform-Linux%20(systemd)-brightgreen?style=flat-square)
 ![ShellCheck](https://img.shields.io/badge/shellcheck-passing-success?style=flat-square)
 
-**Adaptive systemd optimizer & guard for Linux**
 
-> Mitigates common systemd weaknesses in a **safe**, **adaptive**, and **reversible** way  
-without kernel patching, aggressive tweaks, or breaking your system.
+A **safe, profile-based systemd optimization framework** that makes systemd *feel* like a traditional sysinit (SysVinit/OpenRC) **without breaking modern Linux features**.
 
----
+systemd-shield is **not** a random tweak script. It is a **behavior-shaping layer** for systemd, focused on:
 
-## ✨ What is systemd-shield?
-
-`systemd-shield` is a systemd optimization tool written in shell script that:
-
-- Automatically detects system conditions
-- Reduces excessive disk & IO usage from logging
-- Prevents desktop freezes caused by memory pressure
-- Disables unnecessary services safely
-- Always provides **backup and rollback**
-
-Designed for:
-- Daily Linux desktops
-- Low-end laptops
-- Workstations
-- Power users on systemd-based distributions
+* reducing idle overhead
+* minimizing background daemons
+* prioritizing on-demand activation
+* keeping the system stable, reversible, and maintainable
 
 ---
 
-## 🎯 systemd Problems Addressed
+## ✨ Key Features
 
-| Problem | Solution |
-|-------|----------|
-| Journald excessive disk & IO usage | Journald Guard |
-| System freeze under memory pressure | systemd-oomd Guard |
-| Unused background services | Smart Service Guard |
-| Long default boot timeouts | Boot Guard |
-| Inconsistent resource accounting | Resource Guard |
-
----
-
-## 🧠 How It Works
-
-```
-Detect system
-   ↓
-Analyze hardware & environment
-   ↓
-Apply safe systemd guards
-   ↓
-Restart affected systemd components
-```
-
-✔ No systemd binary patching  
-✔ No kernel modifications  
-✔ No dangerous sysctl tweaks  
+* 🧠 **Sysinit-like mode** (minimal background services)
+* 📉 Lightweight journald configuration (RAM-based)
+* 🔌 Socket-first service activation
+* 🧹 Target hygiene (cleaner dependency graph)
+* ⚙️ Selective resource accounting
+* 📦 Profile-based behavior presets
+* ♻️ Safe & reversible design
+* 🧩 Modular architecture
 
 ---
 
-## 🔍 Automatic Detection
+## 🎯 Design Philosophy
 
-systemd-shield automatically detects:
+> systemd-shield does **not fight systemd**.
+> It **teaches systemd to behave conservatively**.
 
-- RAM size (low / mid / high)
-- CPU core count
-- HDD or SSD
-- Desktop vs server environment
-- Network stack (NetworkManager / networkd)
-- Bluetooth usage
-- Printer usage (CUPS)
+What systemd-shield **does NOT do**:
 
-The tool **never guesses** — all actions are based on real system state.
+* ❌ remove systemd
+* ❌ mask critical units
+* ❌ disable dbus / udev
+* ❌ break dependency ordering
 
----
+What systemd-shield **does**:
 
-## ⚙️ Key Features
-
-### 🧾 Journald Guard
-- Log size limits
-- Compression enabled
-- Reduced disk write amplification
-
-### 🧠 OOMD Guard
-- Memory pressure tuning
-- Prevents total system freeze
-- Desktop-friendly behavior
-
-### 🧮 Resource Guard
-- Enables CPU, memory, and task accounting
-- Improves system stability and control
-
-### 🚀 Boot Guard
-- Shorter systemd timeouts
-- Faster boot without added risk
-
-### 🔌 Smart Service Guard
-- Disables Bluetooth if unused
-- Disables CUPS when no printer is present
+* ✔ reduce managerial overhead
+* ✔ defer service startup until needed
+* ✔ minimize logging cost
+* ✔ keep the system debuggable
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 systemd-shield/
-├── systemd-shield.sh
-├── detect/
-│   ├── hardware.sh
-│   ├── environment.sh
-│   └── services.sh
-├── modules/
-│   ├── journald_guard.sh
-│   ├── oomd_guard.sh
-│   ├── resource_guard.sh
-│   ├── boot_guard.sh
-│   ├── service_guard.sh
+├── cli.sh                  # User entry point
+├── core/                   # Orchestration layer
+│   ├── loader.sh
+│   ├── safety.sh
+│   ├── logger.sh
 │   └── rollback.sh
+├── modules/                # Single-responsibility tweaks
+│   ├── journald_guard.sh
+│   ├── socket_first.sh
+│   ├── target_hygiene.sh
+│   ├── service_guard.sh
+│   └── resource_guard.sh
+├── detect/                 # Environment detection (context-aware)
+├── profiles/               # Behavior presets (data only)
+│   ├── desktop.conf
+│   ├── lowend.conf
+│   └── sysinit-like.conf
+├── VERSION
+├── CHANGELOG.md
+└── README.md
 ```
 
 ---
 
-## 🚀 Installation & Usage
+## 🚀 Installation
+
+Clone the repository:
 
 ```bash
-git clone https://github.com/USERNAME/systemd-shield.git
+git clone https://github.com/umemiya969/systemd-shield.git
 cd systemd-shield
-chmod +x systemd-shield.sh
-sudo ./systemd-shield.sh
 ```
 
----
-
-## 🔄 Rollback
-
-All configuration files are automatically backed up to:
-
-```
-/etc/systemd-shield-backup/
-```
-
-Manual rollback:
+Make scripts executable:
 
 ```bash
-source modules/rollback.sh
-rollback
+chmod +x cli.sh modules/*.sh core/*.sh
 ```
 
 ---
 
-## 🛡️ Safety & Philosophy
+## ▶️ Usage
 
-- ❌ No systemd patching
-- ❌ No kernel modifications
-- ❌ No critical service removal
-- ❌ No aggressive tuning
+### Apply a profile
 
-**Primary focus:** stability, responsiveness, and safety.
+```bash
+sudo ./cli.sh apply sysinit-like
+```
 
----
+Available profiles:
 
-## 📦 Supported Distributions
+* `desktop`
+* `lowend`
+* `sysinit-like`
 
-- Arch Linux
-- Fedora
-- Ubuntu
-- Debian
-- openSUSE
+### Show status
 
-> Any **systemd-based** Linux distribution
+```bash
+./cli.sh status
+```
 
----
+### Rollback (basic)
 
-## ❗ Disclaimer
-
-- Not a replacement for advanced manual tuning
-- Not recommended for critical production servers without testing
-- Use with basic systemd knowledge
+```bash
+sudo ./cli.sh rollback
+```
 
 ---
 
-## 🛣️ Roadmap
+## 🧠 sysinit-like Profile Explained
 
-- [ ] CLI flags (`--dry-run`, `--rollback`)
-- [ ] Preset profiles (desktop / gaming / lowend)
-- [ ] System health report (daily summary)
-- [ ] GUI frontend (optional)
-- [ ] Packaging (AUR / COPR / DEB)
+The **sysinit-like** profile makes systemd behave closer to classic init systems:
+
+* minimal always-on daemons
+* services start only when needed
+* lightweight logging
+* reduced accounting overhead
+
+### What changes:
+
+| Area                | Default systemd         | sysinit-like          |
+| ------------------- | ----------------------- | --------------------- |
+| Journald            | Persistent & compressed | Volatile (RAM)        |
+| Services            | Eager start             | On-demand             |
+| Socket activation   | Partial                 | Prioritized           |
+| Resource accounting | Global                  | Selective             |
+| Timers              | Many enabled            | Non-critical disabled |
+
+---
+
+## 🛡 Safety Guarantees
+
+systemd-shield is designed to be **safe by default**:
+
+* All changes use **drop-in configs**
+* No vendor files are modified
+* No critical units are masked
+* Rollback path is planned and explicit
+
+If something goes wrong, you can always boot with the previous configuration.
+
+---
+
+## 🧪 Tested On
+
+* Arch Linux
+* Fedora
+* Debian / Ubuntu (systemd-based)
+
+> Other systemd distributions should work, but are not officially tested.
+
+---
+
+## ⚠️ Disclaimer
+
+This project modifies systemd behavior.
+While it is designed to be safe, **use at your own risk**.
+
+Always read profiles before applying them.
 
 ---
 
 ## 📜 License
 
-MIT License  
-Free to use, modify, and distribute.
+MIT License
 
 ---
 
-## ⭐ Why systemd-shield?
+## 🤝 Contributing
 
-Because it is:
-- Not a random tweak script
-- Based on real system detection
-- Safe and reversible
-- Built with a **product mindset**, not experimentation
+Contributions are welcome.
+
+Guidelines:
+
+* Keep modules single-responsibility
+* Do not hardcode distro-specific hacks
+* Prefer drop-in configs over masking
+* Follow DESIGN.md principles
+
+---
+
+## 🌟 Why systemd-shield?
+
+Because modern Linux does not need to be heavy.
+
+systemd-shield proves that:
+
+> **You can have modern systemd AND sysinit-like simplicity.**
