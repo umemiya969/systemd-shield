@@ -1,0 +1,7 @@
+[desktop]
+Storage=volatile
+RuntimeMaxUse=64M
+
+[server]
+Storage=persistent
+SystemMaxUse=500M

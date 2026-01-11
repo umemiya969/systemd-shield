@@ -1,13 +1,14 @@
+#!/usr/bin/env bash
+
 apply_resource_guard() {
-  mkdir -p /etc/systemd/system.conf.d
+  if [[ "$ENABLE_GLOBAL_ACCOUNTING" == "no" ]]; then
+    mkdir -p /etc/systemd/system.conf.d
 
-  cat > /etc/systemd/system.conf.d/99-shield.conf <<EOF
+    cat > /etc/systemd/system.conf.d/10-shield.conf <<EOF
 [Manager]
-DefaultCPUAccounting=yes
-DefaultMemoryAccounting=yes
-DefaultTasksAccounting=yes
+DefaultCPUAccounting=no
+DefaultMemoryAccounting=no
+DefaultIOAccounting=no
 EOF
-
-  systemctl daemon-reexec
-  echo "[OK] resource accounting enabled"
+  fi
 }

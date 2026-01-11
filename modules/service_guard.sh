@@ -1,12 +1,9 @@
 apply_service_guard() {
+  for svc in "${DISABLE_SERVICES[@]}"; do
+    systemctl disable --now "$svc" 2>/dev/null || true
+  done
 
-  if [[ "$USE_BT" -eq 0 ]]; then
-    systemctl disable --now bluetooth.service 2>/dev/null || true
-    echo "[OK] bluetooth disabled"
-  fi
-
-  if [[ "$USE_PRINTER" -eq 0 ]]; then
-    systemctl disable --now cups.service 2>/dev/null || true
-    echo "[OK] cups disabled"
-  fi
+  for timer in "${DISABLE_TIMERS[@]}"; do
+    systemctl disable --now "$timer" 2>/dev/null || true
+  done
 }
