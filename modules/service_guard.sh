@@ -6,4 +6,7 @@ apply_service_guard() {
   for timer in "${DISABLE_TIMERS[@]}"; do
     systemctl disable --now "$timer" 2>/dev/null || true
   done
+
+[[ "$KEEP_SYSTEMD_RESOLVED" == yes ]] && continue
+
 }
