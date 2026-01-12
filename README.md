@@ -6,7 +6,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/umemiya969/systemd-shield)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/umemiya969/systemd-shield/main/assets/logo.svg" width="120">
+  <img src="https://raw.githubusercontent.com/umemiya969/systemd-shield/main/logo2.png" width="120">
 </p>
 
 <h1 align="center">systemd-shield</h1>
