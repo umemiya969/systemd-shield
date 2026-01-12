@@ -1,9 +1,22 @@
-# 🛡️ systemd-shield
+<p align="center">
+  <img src="https://raw.githubusercontent.com/umemiya969/systemd-shield/main/assets/logo.svg" width="120">
+</p>
 
-![License](https://img.shields.io/github/license/umemiya969/systemd-shield?style=flat-square)
-![Shell](https://img.shields.io/badge/shell-bash-blue?style=flat-square)
-![Platform](https://img.shields.io/badge/platform-Linux%20(systemd)-brightgreen?style=flat-square)
-![ShellCheck](https://img.shields.io/badge/shellcheck-passing-success?style=flat-square)
+<h1 align="center">systemd-shield</h1>
+
+<p align="center">
+  Make systemd feel like sysinit — safely, predictably, and reversibly.
+</p>
+
+<p align="center">
+  <b>Boot faster · Fewer daemons · Zero breakage</b>
+</p>
+
+![Platform](https://img.shields.io/badge/platform-linux-blue)
+![Init](https://img.shields.io/badge/init-systemd-green)
+![Shell](https://img.shields.io/badge/shell-bash-yellow)
+![License](https://img.shields.io/github/license/umemiya969/systemd-shield)
+![Last Commit](https://img.shields.io/github/last-commit/umemiya969/systemd-shield)
 
 
 A **safe, profile-based systemd optimization framework** that makes systemd *feel* like a traditional sysinit (SysVinit/OpenRC) **without breaking modern Linux features**.
@@ -14,6 +27,16 @@ systemd-shield is **not** a random tweak script. It is a **behavior-shaping laye
 * minimizing background daemons
 * prioritizing on-demand activation
 * keeping the system stable, reversible, and maintainable
+
+---
+
+## Why systemd-shield?
+
+systemd-shield is not another systemd tweaker.
+
+It is a **design-driven hardening layer** that reshapes systemd behavior to feel
+like classic sysinit or OpenRC — **without disabling core services, breaking DNS,
+or corrupting dependency graphs**.
 
 ---
 
