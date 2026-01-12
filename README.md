@@ -1,8 +1,8 @@
-
 ![Platform](https://img.shields.io/badge/platform-linux-blue)
 ![Init](https://img.shields.io/badge/init-systemd-green)
 ![Shell](https://img.shields.io/badge/shell-bash-yellow)
 ![License](https://img.shields.io/github/license/umemiya969/systemd-shield)
+![Release](https://img.shields.io/github/v/release/umemiya969/systemd-shield)
 ![Last Commit](https://img.shields.io/github/last-commit/umemiya969/systemd-shield)
 
 <p align="center">
@@ -19,210 +19,115 @@
   <b>Boot faster · Fewer daemons · Zero breakage</b>
 </p>
 
-A **safe, profile-based systemd optimization framework** that makes systemd *feel* like a traditional sysinit (SysVinit/OpenRC) **without breaking modern Linux features**.
 
-systemd-shield is **not** a random tweak script. It is a **behavior-shaping layer** for systemd, focused on:
+---
 
-* reducing idle overhead
-* minimizing background daemons
-* prioritizing on-demand activation
-* keeping the system stable, reversible, and maintainable
+## What is systemd-shield?
+
+**systemd-shield** is a design-driven hardening and optimization layer for
+systemd-based Linux systems.
+
+It reshapes systemd to behave more like classic **sysinit/OpenRC** — minimal,
+predictable, and on-demand — **without disabling core services, breaking DNS,
+or corrupting systemd’s dependency graph**.
+
+This project focuses on **engineering discipline**, not ideology.
 
 ---
 
 ## Why systemd-shield?
 
-systemd-shield is not another systemd tweaker.
+Most “systemd debloat” scripts:
 
-It is a **design-driven hardening layer** that reshapes systemd behavior to feel
-like classic sysinit or OpenRC — **without disabling core services, breaking DNS,
-or corrupting dependency graphs**.
+* break DNS resolution
+* break networking
+* mask critical services
+* leave systems unrecoverable
 
----
+systemd-shield takes a different approach:
 
-## ✨ Key Features
+* safety-first design
+* fully reversible changes
+* no vendor unit modification
+* no removal of systemd components
 
-* 🧠 **Sysinit-like mode** (minimal background services)
-* 📉 Lightweight journald configuration (RAM-based)
-* 🔌 Socket-first service activation
-* 🧹 Target hygiene (cleaner dependency graph)
-* ⚙️ Selective resource accounting
-* 📦 Profile-based behavior presets
-* ♻️ Safe & reversible design
-* 🧩 Modular architecture
+If a change is not safe, it does not belong here.
 
 ---
 
-## 🎯 Design Philosophy
+## Core Features
 
-> systemd-shield does **not fight systemd**.
-> It **teaches systemd to behave conservatively**.
-
-What systemd-shield **does NOT do**:
-
-* ❌ remove systemd
-* ❌ mask critical units
-* ❌ disable dbus / udev
-* ❌ break dependency ordering
-
-What systemd-shield **does**:
-
-* ✔ reduce managerial overhead
-* ✔ defer service startup until needed
-* ✔ minimize logging cost
-* ✔ keep the system debuggable
+* 🛡 **Service Guard** — safely disable non-critical background services
+* 🔌 **Socket-First Activation** — start services only when needed
+* 🧹 **Target Hygiene** — clean unnecessary target overrides
+* 🌐 **DNS-Safe Modes** — systemd-resolved, NetworkManager, or static DNS
+* ♻️ **Reversible by Design** — no permanent system damage
 
 ---
 
-## 📁 Project Structure
+## Stability
 
-```text
-systemd-shield/
-├── cli.sh                  # User entry point
-├── core/                   # Orchestration layer
-│   ├── loader.sh
-│   ├── safety.sh
-│   ├── logger.sh
-│   └── rollback.sh
-├── modules/                # Single-responsibility tweaks
-│   ├── journald_guard.sh
-│   ├── socket_first.sh
-│   ├── target_hygiene.sh
-│   ├── service_guard.sh
-│   └── resource_guard.sh
-├── detect/                 # Environment detection (context-aware)
-├── profiles/               # Behavior presets (data only)
-│   ├── desktop.conf
-│   ├── lowend.conf
-│   └── sysinit-like.conf
-├── VERSION
-├── CHANGELOG.md
-└── README.md
-```
+systemd-shield **v1.0.0** is considered **stable**.
+
+All modules are:
+
+* idempotent
+* reversible
+* safe to re-run
+
+Breaking changes will only be introduced in major versions.
 
 ---
 
-## 🚀 Installation
-
-Clone the repository:
+## Quick Start
 
 ```bash
 git clone https://github.com/umemiya969/systemd-shield.git
 cd systemd-shield
-```
-
-Make scripts executable:
-
-```bash
-chmod +x cli.sh modules/*.sh core/*.sh
-```
-
----
-
-## ▶️ Usage
-
-### Apply a profile
-
-```bash
 sudo ./cli.sh apply sysinit-like
 ```
 
-Available profiles:
-
-* `desktop`
-* `lowend`
-* `sysinit-like`
-
-### Show status
-
-```bash
-./cli.sh status
-```
-
-### Rollback (basic)
-
-```bash
-sudo ./cli.sh rollback
-```
+> Always review profiles before applying changes.
 
 ---
 
-## 🧠 sysinit-like Profile Explained
+## Safety Guarantees
 
-The **sysinit-like** profile makes systemd behave closer to classic init systems:
+systemd-shield guarantees:
 
-* minimal always-on daemons
-* services start only when needed
-* lightweight logging
-* reduced accounting overhead
+* DNS will always remain functional
+* Networking will not be disabled
+* Core system services are protected
+* Vendor unit files are never modified
 
-### What changes:
-
-| Area                | Default systemd         | sysinit-like          |
-| ------------------- | ----------------------- | --------------------- |
-| Journald            | Persistent & compressed | Volatile (RAM)        |
-| Services            | Eager start             | On-demand             |
-| Socket activation   | Partial                 | Prioritized           |
-| Resource accounting | Global                  | Selective             |
-| Timers              | Many enabled            | Non-critical disabled |
+If the system becomes unstable, it is considered a bug.
 
 ---
 
-## 🛡 Safety Guarantees
+## Roadmap
 
-systemd-shield is designed to be **safe by default**:
+See [ROADMAP.md](ROADMAP.md) for upcoming features, including:
 
-* All changes use **drop-in configs**
-* No vendor files are modified
-* No critical units are masked
-* Rollback path is planned and explicit
-
-If something goes wrong, you can always boot with the previous configuration.
+* preflight system checks
+* automatic rollback
+* dry-run mode
+* benchmarking tools
 
 ---
 
-## 🧪 Tested On
+## Design
 
-* Arch Linux
-* Fedora
-* Debian / Ubuntu (systemd-based)
-
-> Other systemd distributions should work, but are not officially tested.
+For architectural details and design philosophy, see:
+[DESIGN.md](DESIGN.md)
 
 ---
 
-## ⚠️ Disclaimer
+## Security
 
-This project modifies systemd behavior.
-While it is designed to be safe, **use at your own risk**.
-
-Always read profiles before applying them.
+Please see [SECURITY.md](SECURITY.md) for vulnerability reporting.
 
 ---
 
-## 📜 License
+## License
 
-MIT License
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome.
-
-Guidelines:
-
-* Keep modules single-responsibility
-* Do not hardcode distro-specific hacks
-* Prefer drop-in configs over masking
-* Follow DESIGN.md principles
-
----
-
-## 🌟 Why systemd-shield?
-
-Because modern Linux does not need to be heavy.
-
-systemd-shield proves that:
-
-> **You can have modern systemd AND sysinit-like simplicity.**
+This project is licensed under the **MIT License**.
