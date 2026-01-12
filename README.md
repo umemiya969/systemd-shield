@@ -1,3 +1,10 @@
+
+![Platform](https://img.shields.io/badge/platform-linux-blue)
+![Init](https://img.shields.io/badge/init-systemd-green)
+![Shell](https://img.shields.io/badge/shell-bash-yellow)
+![License](https://img.shields.io/github/license/umemiya969/systemd-shield)
+![Last Commit](https://img.shields.io/github/last-commit/umemiya969/systemd-shield)
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/umemiya969/systemd-shield/main/assets/logo.svg" width="120">
 </p>
@@ -11,13 +18,6 @@
 <p align="center">
   <b>Boot faster · Fewer daemons · Zero breakage</b>
 </p>
-
-![Platform](https://img.shields.io/badge/platform-linux-blue)
-![Init](https://img.shields.io/badge/init-systemd-green)
-![Shell](https://img.shields.io/badge/shell-bash-yellow)
-![License](https://img.shields.io/github/license/umemiya969/systemd-shield)
-![Last Commit](https://img.shields.io/github/last-commit/umemiya969/systemd-shield)
-
 
 A **safe, profile-based systemd optimization framework** that makes systemd *feel* like a traditional sysinit (SysVinit/OpenRC) **without breaking modern Linux features**.
 
