@@ -1,0 +1,57 @@
+# ===============================
+# systemd-shield .gitignore
+# ===============================
+
+# Backup files
+*~
+*.bak
+*.old
+*.orig
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+logs/
+log/
+
+# Runtime / cache
+.cache/
+tmp/
+temp/
+
+# systemd-shield runtime state
+.state/
+.state.json
+*.state
+
+# Rollback snapshots
+snapshots/
+rollback/
+*.snapshot
+
+# Test artifacts
+test-output/
+coverage/
+
+# Generated files
+*.out
+*.pid
+
+# Environment files
+.env
+.env.local
+
+# OS trash
+Thumbs.db
+
+# Optional local config
+config.local.sh
