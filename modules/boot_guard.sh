@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 apply_boot_guard() {
   mkdir -p /etc/systemd/system.conf.d
 
