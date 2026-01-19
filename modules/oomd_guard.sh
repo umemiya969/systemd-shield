@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 apply_oomd_guard() {
   CONF="/etc/systemd/oomd.conf"
   cp -a "$CONF" "$BACKUP/oomd.conf.bak" 2>/dev/null || true

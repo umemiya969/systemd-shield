@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 apply_logging_guard() {
   mkdir -p backups
   CONF="/etc/systemd/journald.conf"

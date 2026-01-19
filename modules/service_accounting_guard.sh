@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 apply_service_accounting_guard() {
   for dir in /etc/systemd/system/*.service.d; do
     mkdir -p "$dir"

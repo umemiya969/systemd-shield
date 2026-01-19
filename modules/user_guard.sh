@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 apply_user_guard() {
   CONF="/etc/systemd/user.conf.d/systemd-shield.conf"
   mkdir -p /etc/systemd/user.conf.d

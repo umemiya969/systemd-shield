@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 apply_manager_guard() {
   CONF="/etc/systemd/system.conf.d/99-systemd-shield.conf"
   mkdir -p /etc/systemd/system.conf.d

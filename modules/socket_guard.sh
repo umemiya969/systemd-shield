@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 apply_socket_guard() {
   SOCKETS=(
     avahi-daemon.socket
