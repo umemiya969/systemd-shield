@@ -23,8 +23,8 @@ jobs:
       - name: Run ShellCheck
         run: |
           echo "Running ShellCheck..."
-          shellcheck cli.sh
-          shellcheck modules/*.sh
+          shellcheck -x cli.sh
+          shellcheck -x modules/*.sh
 
       - name: Permission sanity check
         run: |
