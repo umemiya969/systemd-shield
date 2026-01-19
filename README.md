@@ -4,6 +4,7 @@
 ![License](https://img.shields.io/github/license/umemiya969/systemd-shield)
 ![Release](https://img.shields.io/github/v/release/umemiya969/systemd-shield)
 ![Last Commit](https://img.shields.io/github/last-commit/umemiya969/systemd-shield)
+![CI](https://github.com/umemiya969/systemd-shield/actions/workflows/ci.yml/badge.svg)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/umemiya969/systemd-shield/main/logo2.png" width="120">
