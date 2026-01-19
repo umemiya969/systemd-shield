@@ -1,0 +1,42 @@
+name: systemd-shield CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  shell-validation:
+    name: Shell Script Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck
+        run: |
+          echo "Running ShellCheck..."
+          shellcheck cli.sh
+          shellcheck modules/*.sh
+
+      - name: Permission sanity check
+        run: |
+          echo "Checking executable flags"
+          test -x cli.sh || (echo "cli.sh not executable" && exit 1)
+          for f in modules/*.sh; do
+            test -x "$f" || echo "Warning: $f not executable"
+          done
+
+      - name: Dangerous command scan
+        run: |
+          echo "Scanning for dangerous patterns"
+          ! grep -R \"rm -rf /\" . || exit 1
+          ! grep -R \"mkfs\" . || exit 1
+          ! grep -R \"dd if=\" . || exit 1
