@@ -28,6 +28,8 @@ source "$BASE_DIR/modules/manager_guard.sh"
 source "$BASE_DIR/modules/service_accounting_guard.sh"
 source "$BASE_DIR/modules/socket_guard.sh"
 source "$BASE_DIR/modules/user_guard.sh"
+source "$BASE_DIR/modules/network_guard.sh"
+
 
 detect_hardware
 detect_environment
@@ -41,5 +43,6 @@ apply_oomd_guard
 apply_resource_guard
 apply_boot_guard
 apply_service_guard
+apply_network_guard
 
 echo "[✓] systemd-shield applied successfully"
